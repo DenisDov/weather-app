@@ -8,6 +8,7 @@ export default function App() {
   const { width, height } = useWindowDimensions();
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      <StatusBar style="auto" />
       <Canvas style={{ width, height }}>
         <Rect x={0} y={0} width={width} height={height}>
           <LinearGradient
