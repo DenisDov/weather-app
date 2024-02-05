@@ -1,12 +1,17 @@
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
-import { ImageBackground } from "expo-image";
-import { StyleSheet, useWindowDimensions } from "react-native";
+import { Image, ImageBackground } from "expo-image";
+import { StyleSheet, useWindowDimensions, ScaledSize } from "react-native";
 
 export default function HomeBackground() {
-  const { width, height } = useWindowDimensions();
+  const dimensions = useWindowDimensions();
+  const { width, height } = dimensions;
+  const myStyles = styles(dimensions);
+
+  const smokeHeight = height * 0.6;
+  const smokeOffsetY = height * 0.4;
   return (
     <>
-      <Canvas style={styles.canvas}>
+      <Canvas style={myStyles.canvas}>
         <Rect x={0} y={0} width={width} height={height}>
           <LinearGradient
             start={vec(0, 0)}
@@ -18,17 +23,40 @@ export default function HomeBackground() {
       <ImageBackground
         source={require("@/assets/home/Background.png")}
         contentFit="cover"
-        style={styles.image}
-      />
+        style={myStyles.background}>
+        <Canvas
+          style={{ height: smokeHeight, ...StyleSheet.absoluteFillObject, top: smokeOffsetY }}>
+          <Rect x={0} y={0} width={width} height={smokeHeight}>
+            <LinearGradient
+              start={vec(width / 2, 0)}
+              end={vec(width / 2, smokeHeight)}
+              colors={["rgba(58,63,84,0)", "rgba(58,63,84,1)"]}
+              positions={[-0.02, 0.54]}
+            />
+          </Rect>
+        </Canvas>
+        <Image
+          source={require("@/assets/home/House.png")}
+          contentFit="cover"
+          style={myStyles.image}
+        />
+      </ImageBackground>
     </>
   );
 }
 
-const styles = StyleSheet.create({
-  canvas: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  image: {
-    flex: 1,
-  },
-});
+const styles = ({ width }: ScaledSize) =>
+  StyleSheet.create({
+    canvas: {
+      ...StyleSheet.absoluteFillObject,
+    },
+    background: {
+      flex: 1,
+    },
+    image: {
+      width,
+      height: width,
+      ...StyleSheet.absoluteFillObject,
+      top: "36%",
+    },
+  });
