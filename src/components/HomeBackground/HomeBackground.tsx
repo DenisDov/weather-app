@@ -1,16 +1,18 @@
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
 import { Image, ImageBackground } from "expo-image";
-import { StyleSheet, useWindowDimensions, ScaledSize } from "react-native";
+import { StyleSheet, ScaledSize, View } from "react-native";
+
+import useApplicationDimensions from "@/hooks/useApplicationDimensions";
 
 export default function HomeBackground() {
-  const dimensions = useWindowDimensions();
+  const dimensions = useApplicationDimensions();
   const { width, height } = dimensions;
   const myStyles = styles(dimensions);
 
   const smokeHeight = height * 0.6;
   const smokeOffsetY = height * 0.4;
   return (
-    <>
+    <View style={{ ...StyleSheet.absoluteFillObject }}>
       <Canvas style={myStyles.canvas}>
         <Rect x={0} y={0} width={width} height={height}>
           <LinearGradient
@@ -41,7 +43,7 @@ export default function HomeBackground() {
           style={myStyles.image}
         />
       </ImageBackground>
-    </>
+    </View>
   );
 }
 

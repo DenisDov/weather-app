@@ -4,12 +4,14 @@ import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import HomeBackground from "@/components/HomeBackground";
+import WeatherTabBar from "@/components/tabbar/WeatherTabBar";
 
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar style="light" />
       <HomeBackground />
+      <WeatherTabBar />
     </GestureHandlerRootView>
   );
 }
