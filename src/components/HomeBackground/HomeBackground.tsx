@@ -13,7 +13,7 @@ export default function HomeBackground() {
   const smokeOffsetY = height * 0.4;
   return (
     <View style={{ ...StyleSheet.absoluteFillObject }}>
-      <Canvas style={myStyles.canvas}>
+      <Canvas style={{ ...StyleSheet.absoluteFillObject }}>
         <Rect x={0} y={0} width={width} height={height}>
           <LinearGradient
             start={vec(0, 0)}
@@ -25,7 +25,7 @@ export default function HomeBackground() {
       <ImageBackground
         source={require("@/assets/home/Background.png")}
         contentFit="cover"
-        style={myStyles.background}>
+        style={{ ...StyleSheet.absoluteFillObject }}>
         <Canvas
           style={{ height: smokeHeight, ...StyleSheet.absoluteFillObject, top: smokeOffsetY }}>
           <Rect x={0} y={0} width={width} height={smokeHeight}>
@@ -47,18 +47,14 @@ export default function HomeBackground() {
   );
 }
 
-const styles = ({ width }: ScaledSize) =>
-  StyleSheet.create({
-    canvas: {
-      ...StyleSheet.absoluteFillObject,
-    },
-    background: {
-      flex: 1,
-    },
+const styles = ({ width, height }: ScaledSize) => {
+  const imageY = (304 / height) * 100;
+  return StyleSheet.create({
     image: {
+      ...StyleSheet.absoluteFillObject,
       width,
       height: width,
-      ...StyleSheet.absoluteFillObject,
-      top: "36%",
+      top: `${imageY}%`,
     },
   });
+};
