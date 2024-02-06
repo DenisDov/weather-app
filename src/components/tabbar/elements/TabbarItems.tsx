@@ -1,5 +1,6 @@
-import { View } from "react-native";
+import { Pressable, View, StyleSheet } from "react-native";
 
+import CircleButton from "./CircleButton";
 import TrapezoidBackground from "./TrapezoidBackground";
 import ListIcon from "../icons/ListIcon";
 import MapIcon from "../icons/MapIcon";
@@ -10,6 +11,8 @@ export default function TabbarItems() {
   const { width, height } = useApplicationDimensions();
   const trapezoidWidth = width * 0.709;
   const trapezoidHeight = height * 0.123;
+  const circleRadius = Math.round((trapezoidHeight * 0.48) / 2);
+  const buttonCenterX = width / 2 - circleRadius;
   return (
     <View
       style={{
@@ -21,6 +24,16 @@ export default function TabbarItems() {
       }}>
       <MapIcon />
       <TrapezoidBackground width={trapezoidWidth} height={trapezoidHeight} />
+      <Pressable
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          left: buttonCenterX,
+          top: 12,
+          width: circleRadius * 2,
+          height: circleRadius * 2,
+        }}>
+        {({ pressed }) => <CircleButton radius={circleRadius} pressed={pressed} />}
+      </Pressable>
       <ListIcon />
     </View>
   );
