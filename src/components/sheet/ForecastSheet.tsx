@@ -1,11 +1,21 @@
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useState } from "react";
 import { Text, View, StyleSheet, Platform } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 import ForecastSheetBackground from "./ForecastSheetBackground";
 import ForecastControl from "./elements/ForecastControl";
 import Separator from "./elements/Separator";
 import ForecastScroll from "../forecast/ForecastScroll";
+import AirQualityWidget from "../forecast/widgets/AirQualityWidget";
+import FeelsLikeWidget from "../forecast/widgets/FeelsLikeWidget";
+import HumidityWidget from "../forecast/widgets/HumidityWidget";
+import PressureWidget from "../forecast/widgets/PressureWidget";
+import RainFallWidget from "../forecast/widgets/RainFallWidget";
+import SunriseWidget from "../forecast/widgets/SunriseWidget";
+import UvIndexWidget from "../forecast/widgets/UvIndexWidget";
+import VisibilityWidget from "../forecast/widgets/VisibilityWidget";
+import WindWidget from "../forecast/widgets/WindWidget";
 
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
 import { hourly, weekly } from "@/lib/data/ForecastData";
@@ -13,6 +23,7 @@ import { ForecastType } from "@/models/Weather";
 
 export default function ForecastSheet() {
   const { width, height } = useApplicationDimensions();
+  const smalLWidgetSize = width / 2 - 20;
   const snapPoints = ["38.5%", "83%"];
   const firstSnapPoint = height * (parseFloat(snapPoints[0]) / 100);
   const cornerRadius = 44;
@@ -37,12 +48,38 @@ export default function ForecastSheet() {
       )}>
       <ForecastControl onPress={(type) => setSelectedForecastType(type)} />
       <Separator width={width} height={1} />
-      <ForecastScroll
-        capsuleWidth={capsuleWidth}
-        capsuleHeight={capsuleHeight}
-        capsuleRadius={capsuleRadius}
-        forecasts={selectedForecastType === ForecastType.Hourly ? hourly : weekly}
-      />
+      <ScrollView
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 10 }}>
+        <ForecastScroll
+          capsuleWidth={capsuleWidth}
+          capsuleHeight={capsuleHeight}
+          capsuleRadius={capsuleRadius}
+          forecasts={selectedForecastType === ForecastType.Hourly ? hourly : weekly}
+        />
+        <View style={{ flex: 1, paddingTop: 30, paddingBottom: smalLWidgetSize }}>
+          <AirQualityWidget width={width - 30} height={150} />
+
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              padding: 15,
+              gap: 10,
+            }}>
+            <UvIndexWidget width={smalLWidgetSize} height={smalLWidgetSize} />
+            <WindWidget width={smalLWidgetSize} height={smalLWidgetSize} />
+            <SunriseWidget width={smalLWidgetSize} height={smalLWidgetSize} />
+            <RainFallWidget width={smalLWidgetSize} height={smalLWidgetSize} />
+            <FeelsLikeWidget width={smalLWidgetSize} height={smalLWidgetSize} />
+            <HumidityWidget width={smalLWidgetSize} height={smalLWidgetSize} />
+            <VisibilityWidget width={smalLWidgetSize} height={smalLWidgetSize} />
+            <PressureWidget width={smalLWidgetSize} height={smalLWidgetSize} />
+          </View>
+        </View>
+      </ScrollView>
     </BottomSheet>
   );
 }
