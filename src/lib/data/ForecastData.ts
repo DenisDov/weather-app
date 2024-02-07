@@ -1,5 +1,3 @@
-import { ImageSourcePropType } from "react-native";
-
 import { Forecast, ForecastType, WeatherType } from "../../models/Weather";
 
 const hour = 3600000; // one hour in milliseconds
