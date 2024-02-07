@@ -2,7 +2,13 @@ import { Canvas, Line, vec, LinearGradient } from "@shopify/react-native-skia";
 import { useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, LayoutChangeEvent } from "react-native";
 
-export default function ForecastControl() {
+import { ForecastType } from "@/models/Weather";
+
+interface ForecastControlProps {
+  onPress: (forecastType: ForecastType) => void;
+}
+
+export default function ForecastControl({ onPress }: ForecastControlProps) {
   const [textWidth, setTextWidth] = useState(0);
   const onTextLayout = (event: LayoutChangeEvent) => setTextWidth(event.nativeEvent.layout.width);
   const spacingX = 32;
@@ -15,12 +21,12 @@ export default function ForecastControl() {
           justifyContent: "space-between",
           paddingHorizontal: 32,
         }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => onPress(ForecastType.Hourly)}>
           <Text onLayout={onTextLayout} style={styles.forecastText}>
             Hourly Forecast
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => onPress(ForecastType.Weekly)}>
           <Text style={styles.forecastText}>Weekly Forecast</Text>
         </TouchableOpacity>
       </View>
