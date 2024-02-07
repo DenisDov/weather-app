@@ -8,6 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import HomeBackground from "@/components/HomeBackground";
 import WeatherInfo from "@/components/section/WeatherInfo";
+import ForecastSheet from "@/components/sheet/ForecastSheet";
 import WeatherTabBar from "@/components/tabbar/WeatherTabBar";
 import { currentWeather } from "@/lib/data/CurrentWeather";
 
@@ -32,6 +33,7 @@ export default function App() {
         <StatusBar style="light" />
         <HomeBackground />
         <WeatherInfo weather={currentWeather} />
+        <ForecastSheet />
         <WeatherTabBar />
       </GestureHandlerRootView>
     </SafeAreaProvider>
