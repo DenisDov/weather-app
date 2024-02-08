@@ -2,6 +2,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import { useState } from "react";
 import { Text, View, StyleSheet, Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { useAnimatedReaction, useSharedValue } from "react-native-reanimated";
 
 import ForecastSheetBackground from "./ForecastSheetBackground";
 import ForecastControl from "./elements/ForecastControl";
@@ -26,14 +27,38 @@ export default function ForecastSheet() {
   const smalLWidgetSize = width / 2 - 20;
   const snapPoints = ["38.5%", "83%"];
   const firstSnapPoint = height * (parseFloat(snapPoints[0]) / 100);
+  const secondSnapPoint = height * (parseFloat(snapPoints[1]) / 100);
+  const minY = height - secondSnapPoint;
+  const maxY = height - firstSnapPoint;
   const cornerRadius = 44;
   const capsuleRadius = 30;
   const capsuleHeight = height * 0.17;
   const capsuleWidth = width * 0.15;
-  const [selectedForecastType, setSelectedForecastType] = useState(ForecastType.Hourly);
+  const [selectedForecastType, setSelectedForecastType] = useState<ForecastType>(
+    ForecastType.Hourly,
+  );
+  const currentPosition = useSharedValue(0);
+
+  const normalizePosition = (position: number) => {
+    "worklet";
+    return ((position - maxY) / (maxY - minY)) * -1;
+  };
+
+  useAnimatedReaction(
+    () => {
+      return currentPosition.value;
+    },
+    (currentValue, previousValue) => {
+      // ...
+      console.log(normalizePosition(currentValue));
+    },
+  );
+
   return (
     <BottomSheet
       snapPoints={snapPoints}
+      animateOnMount={false}
+      animatedPosition={currentPosition}
       handleIndicatorStyle={{
         width: 48,
         height: 5,
