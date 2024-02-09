@@ -1,7 +1,14 @@
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
 import { Image, ImageBackground } from "expo-image";
-import { StyleSheet, ScaledSize, View } from "react-native";
-import Animated, { Extrapolation, interpolate, useAnimatedStyle } from "react-native-reanimated";
+import { StyleSheet, ScaledSize, View, Platform } from "react-native";
+import Animated, {
+  Extrapolation,
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+} from "react-native-reanimated";
 
 import { useForecastSheetPosition } from "@/context/ForecastSheetContext";
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
@@ -17,6 +24,17 @@ export default function HomeBackground() {
   const animatedPosition = useForecastSheetPosition();
   const AnimatedImgBkg = Animated.createAnimatedComponent(ImageBackground);
   const AnimatedCanvas = Animated.createAnimatedComponent(Canvas);
+  const leftBkgColor = useSharedValue("#2E335A");
+  const rightBkgColor = useSharedValue("#1C1B33");
+  const bkgColors = useDerivedValue(() => {
+    if (Platform.OS === "ios") {
+      leftBkgColor.value = interpolateColor(animatedPosition.value, [0, 1], ["#2E335A", "#422E5A"]);
+    } else {
+      leftBkgColor.value = animatedPosition.value > 0.5 ? "#422E5A" : "#2E335A";
+    }
+
+    return [leftBkgColor.value, rightBkgColor.value];
+  });
   const animatedImgBkgStyles = useAnimatedStyle(() => {
     return {
       transform: [
@@ -40,11 +58,7 @@ export default function HomeBackground() {
     <View style={{ ...StyleSheet.absoluteFillObject }}>
       <Canvas style={{ ...StyleSheet.absoluteFillObject }}>
         <Rect x={0} y={0} width={width} height={height}>
-          <LinearGradient
-            start={vec(0, 0)}
-            end={vec(width, height)}
-            colors={["#2E335A", "#1C1B33"]}
-          />
+          <LinearGradient start={vec(0, 0)} end={vec(width, height)} colors={bkgColors} />
         </Rect>
       </Canvas>
       <AnimatedImgBkg
