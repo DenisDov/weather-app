@@ -1,7 +1,9 @@
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
 import { Image, ImageBackground } from "expo-image";
 import { StyleSheet, ScaledSize, View } from "react-native";
+import Animated, { Extrapolation, interpolate, useAnimatedStyle } from "react-native-reanimated";
 
+import { useForecastSheetPosition } from "@/context/ForecastSheetContext";
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
 
 export default function HomeBackground() {
@@ -11,6 +13,29 @@ export default function HomeBackground() {
 
   const smokeHeight = height * 0.6;
   const smokeOffsetY = height * 0.4;
+
+  const animatedPosition = useForecastSheetPosition();
+  const AnimatedImgBkg = Animated.createAnimatedComponent(ImageBackground);
+  const AnimatedCanvas = Animated.createAnimatedComponent(Canvas);
+  const animatedImgBkgStyles = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: interpolate(
+            animatedPosition.value,
+            [0, 1],
+            [0, -height],
+            Extrapolation.CLAMP,
+          ),
+        },
+      ],
+    };
+  });
+  const animatedCanvasSmoketyles = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(animatedPosition.value, [0, 0.1], [1, 0], Extrapolation.CLAMP),
+    };
+  });
   return (
     <View style={{ ...StyleSheet.absoluteFillObject }}>
       <Canvas style={{ ...StyleSheet.absoluteFillObject }}>
@@ -22,12 +47,15 @@ export default function HomeBackground() {
           />
         </Rect>
       </Canvas>
-      <ImageBackground
+      <AnimatedImgBkg
         source={require("@/assets/home/Background.png")}
         contentFit="cover"
-        style={{ ...StyleSheet.absoluteFillObject }}>
-        <Canvas
-          style={{ height: smokeHeight, ...StyleSheet.absoluteFillObject, top: smokeOffsetY }}>
+        style={[{ ...StyleSheet.absoluteFillObject }, animatedImgBkgStyles]}>
+        <AnimatedCanvas
+          style={[
+            { height: smokeHeight, ...StyleSheet.absoluteFillObject, top: smokeOffsetY },
+            animatedCanvasSmoketyles,
+          ]}>
           <Rect x={0} y={0} width={width} height={smokeHeight}>
             <LinearGradient
               start={vec(width / 2, 0)}
@@ -36,13 +64,13 @@ export default function HomeBackground() {
               positions={[-0.02, 0.54]}
             />
           </Rect>
-        </Canvas>
+        </AnimatedCanvas>
         <Image
           source={require("@/assets/home/House.png")}
           contentFit="cover"
           style={myStyles.image}
         />
-      </ImageBackground>
+      </AnimatedImgBkg>
     </View>
   );
 }

@@ -22,20 +22,27 @@ export default function ForecastScroll({
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      style={{ paddingLeft: 20, paddingTop: 20, paddingBottom: 10 }}>
-      <View style={{ flex: 1, flexDirection: "row", gap: 12 }}>
-        {forecasts.map((forecast, i) => {
-          return (
-            <ForecastCapsule
-              key={i}
-              forecast={forecast}
-              width={capsuleWidth}
-              height={capsuleHeight}
-              radius={capsuleRadius}
-            />
-          );
-        })}
-      </View>
+      contentContainerStyle={{ gap: 12, paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10 }}
+      style={
+        {
+          // paddingLeft: 20,
+          // backgroundColor: "red",
+          // paddingRight: 60,
+        }
+      }>
+      {/* <View style={{ flex: 1, flexDirection: "row", gap: 12 }}> */}
+      {forecasts.map((forecast, i) => {
+        return (
+          <ForecastCapsule
+            key={i}
+            forecast={forecast}
+            width={capsuleWidth}
+            height={capsuleHeight}
+            radius={capsuleRadius}
+          />
+        );
+      })}
+      {/* </View> */}
     </ScrollView>
   );
 }

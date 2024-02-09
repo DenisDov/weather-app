@@ -18,6 +18,7 @@ import UvIndexWidget from "../forecast/widgets/UvIndexWidget";
 import VisibilityWidget from "../forecast/widgets/VisibilityWidget";
 import WindWidget from "../forecast/widgets/WindWidget";
 
+import { useForecastSheetPosition } from "@/context/ForecastSheetContext";
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
 import { hourly, weekly } from "@/lib/data/ForecastData";
 import { ForecastType } from "@/models/Weather";
@@ -38,6 +39,7 @@ export default function ForecastSheet() {
     ForecastType.Hourly,
   );
   const currentPosition = useSharedValue(0);
+  const animatedPosition = useForecastSheetPosition();
 
   const normalizePosition = (position: number) => {
     "worklet";
@@ -50,7 +52,7 @@ export default function ForecastSheet() {
     },
     (currentValue, previousValue) => {
       // ...
-      console.log(normalizePosition(currentValue));
+      animatedPosition.value = normalizePosition(currentValue);
     },
   );
 
