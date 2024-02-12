@@ -1,3 +1,5 @@
+import { ParamListBase, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Pressable, View, StyleSheet } from "react-native";
 
 import CircleButton from "./CircleButton";
@@ -13,6 +15,7 @@ export default function TabbarItems() {
   const trapezoidHeight = height * 0.123;
   const circleRadius = Math.round((trapezoidHeight * 0.48) / 2);
   const buttonCenterX = width / 2 - circleRadius;
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   return (
     <View
       style={{
@@ -34,7 +37,9 @@ export default function TabbarItems() {
         }}>
         {({ pressed }) => <CircleButton radius={circleRadius} pressed={pressed} />}
       </Pressable>
-      <ListIcon />
+      <Pressable onPress={() => navigation.navigate("list")}>
+        <ListIcon />
+      </Pressable>
     </View>
   );
 }
