@@ -1,11 +1,9 @@
 import { Text, View, StyleSheet } from "react-native";
 
+import BackgroundGradient from "@/components/BackgroundGradient";
+
 export default function WeatherList() {
-  return (
-    <View style={styles.container}>
-      <Text>WeatherList</Text>
-    </View>
-  );
+  return <BackgroundGradient />;
 }
 
 const styles = StyleSheet.create({

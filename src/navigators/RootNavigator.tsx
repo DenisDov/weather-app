@@ -11,8 +11,8 @@ export default function RootNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="home" component={Home} />
       <Stack.Screen name="list" component={WeatherList} />
+      <Stack.Screen name="home" component={Home} />
     </Stack.Navigator>
   );
 }
