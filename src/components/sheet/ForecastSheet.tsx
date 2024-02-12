@@ -85,7 +85,7 @@ export default function ForecastSheet() {
           capsuleRadius={capsuleRadius}
           forecasts={selectedForecastType === ForecastType.Hourly ? hourly : weekly}
         />
-        <View style={{ flex: 1, paddingTop: 30, paddingBottom: smalLWidgetSize }}>
+        <View style={{ flex: 1, paddingTop: 30 }}>
           <AirQualityWidget width={width - 30} height={150} />
 
           <View
