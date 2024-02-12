@@ -50,15 +50,50 @@ export default function WeatherInfo({ weather }: WeatherInfoProps) {
       opacity: interpolate(animatedPosition.value, [0, 0.5], [1, 0]),
     };
   });
+  const animatedSeparatorTxtStyle = useAnimatedStyle(() => {
+    const display = animatedPosition.value > 0.5 ? "flex" : "none";
+    return {
+      display,
+      opacity: interpolate(animatedPosition.value, [0, 0.5, 1], [0, 0, 1]),
+    };
+  });
+  const animatedTempConditionStyles = useAnimatedStyle(() => {
+    const flexDirection = animatedPosition.value > 0.5 ? "row" : "column";
+    return {
+      flexDirection,
+    };
+  });
+  const animatedConditionTxtStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: interpolate(
+            animatedPosition.value,
+            [0, 0.5, 1],
+            [0, -20, 0],
+            Extrapolation.CLAMP,
+          ),
+        },
+      ],
+    };
+  });
   return (
     <Animated.View
       style={[{ alignItems: "center", marginTop: weatherInfoMargin }, animatedViewStyle]}>
       <Animated.Text style={styles.cityText}>{city}</Animated.Text>
-      <Animated.Text style={[styles.temperatureText, animatedTempTxtStyles]}>
-        {temperature}
-        {DEGREE_SYMBOL}
-      </Animated.Text>
-      <Animated.Text style={styles.conditionText}>{condition}</Animated.Text>
+      <Animated.View style={[{ alignItems: "center" }, animatedTempConditionStyles]}>
+        <Animated.View style={[{ flexDirection: "row" }]}>
+          <Animated.Text style={[styles.temperatureText, animatedTempTxtStyles]}>
+            {temperature}
+            {DEGREE_SYMBOL}
+          </Animated.Text>
+          <Animated.Text style={[styles.separatorText, animatedSeparatorTxtStyle]}>|</Animated.Text>
+        </Animated.View>
+
+        <Animated.Text style={[styles.conditionText, animatedConditionTxtStyle]}>
+          {condition}
+        </Animated.Text>
+      </Animated.View>
       <Animated.Text style={[styles.minMaxText, animatedMinMaxTxtStyles]}>
         H:{high}
         {DEGREE_SYMBOL} L:{low}
@@ -81,10 +116,10 @@ const styles = StyleSheet.create({
     color: "white",
     lineHeight: 96,
   },
-  seperatorText: {
+  separatorText: {
     fontFamily: "SF-Semibold",
     fontSize: 20,
-    color: "rgba(235,235,245,0.6)",
+    color: '"rgba(235,235,245,0.6)"',
     lineHeight: 20,
     marginHorizontal: 2,
     display: "none",
