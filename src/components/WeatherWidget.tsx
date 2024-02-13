@@ -8,12 +8,24 @@ import {
   usePathInterpolation,
   Skia,
 } from "@shopify/react-native-skia";
-import { StyleSheet, Pressable } from "react-native";
-import { useSharedValue, withTiming } from "react-native-reanimated";
+import { StyleSheet, Pressable, View, Text } from "react-native";
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
+import { DEGREE_SYMBOL } from "@/lib/Constants";
+import { Forecast } from "@/models/Weather";
 
-export default function WeatherWidget() {
+interface WeatherWidgetProps {
+  forecast: Forecast;
+}
+
+export default function WeatherWidget({ forecast }: WeatherWidgetProps) {
+  const { temperature, high, low, location, icon, weather } = forecast;
   const { width, height } = useApplicationDimensions();
   const widgetWidth = width * 0.876;
   const widgetHeight = height * 0.218;
@@ -29,6 +41,11 @@ export default function WeatherWidget() {
     const status = progress.value === 0 ? 1 : 0;
     progress.value = withTiming(status, { duration: 500 });
   };
+  const animatedImgStyles = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${interpolate(progress.value, [0, 1], [0, -2])}deg` }],
+    };
+  });
   return (
     <Pressable style={{ width: widgetWidth, height: widgetHeight, padding: 10 }} onPress={onPress}>
       <Canvas style={{ ...StyleSheet.absoluteFillObject }}>
@@ -42,6 +59,68 @@ export default function WeatherWidget() {
           </Path>
         </FitBox>
       </Canvas>
+      <View style={{ flex: 1, paddingTop: 40, paddingLeft: 20 }}>
+        <Text style={styles.temperatureTxt}>
+          {temperature}
+          {DEGREE_SYMBOL}
+        </Text>
+        <Animated.Image
+          source={icon}
+          style={[
+            {
+              width: 160,
+              height: 160,
+              ...StyleSheet.absoluteFillObject,
+              left: widgetWidth - 160,
+              top: -30,
+            },
+            animatedImgStyles,
+          ]}
+        />
+        <View style={{ paddingTop: 10 }}>
+          <Text style={styles.highLowTxt}>
+            H:{high}
+            {DEGREE_SYMBOL} L:{low}
+            {DEGREE_SYMBOL}
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingRight: 24,
+            }}>
+            <Text style={styles.locationTxt}>{location}</Text>
+            <Text style={styles.weatherTxt}>{weather}</Text>
+          </View>
+        </View>
+      </View>
     </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  temperatureTxt: {
+    fontFamily: "SF-Regular",
+    fontSize: 64,
+    lineHeight: 64,
+    color: "white",
+  },
+  highLowTxt: {
+    fontFamily: "SF-Regular",
+    fontSize: 13,
+    lineHeight: 18,
+    color: "rgba(235,235,246,0.6)",
+  },
+  locationTxt: {
+    fontFamily: "SF-Regular",
+    color: "white",
+    fontSize: 17,
+    lineHeight: 22,
+  },
+  weatherTxt: {
+    fontFamily: "SF-Regular",
+    fontSize: 13,
+    lineHeight: 18,
+    color: "white",
+  },
+});

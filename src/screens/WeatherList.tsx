@@ -2,12 +2,13 @@ import { Ionicons, Feather } from "@expo/vector-icons";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Canvas, LinearGradient, RoundedRect, Shadow, vec } from "@shopify/react-native-skia";
-import { Text, View, StyleSheet, Pressable, TextInput } from "react-native";
+import { Text, View, StyleSheet, Pressable, TextInput, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import BackgroundGradient from "@/components/BackgroundGradient";
 import WeatherWidget from "@/components/WeatherWidget";
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
+import { ForecastList } from "@/lib/data/ForecastData";
 
 export default function WeatherList() {
   const { top } = useSafeAreaInsets();
@@ -61,9 +62,17 @@ export default function WeatherList() {
             />
           </View>
         </View>
-        <View style={{ flex: 1 }}>
-          <WeatherWidget />
-        </View>
+        <ScrollView
+          style={{ flex: 1, paddingTop: 20 }}
+          contentContainerStyle={{
+            alignItems: "center",
+            gap: 20,
+            paddingBottom: 100,
+          }}>
+          {ForecastList.map((forecast, i) => (
+            <WeatherWidget forecast={forecast} key={i} />
+          ))}
+        </ScrollView>
       </View>
     </>
   );
