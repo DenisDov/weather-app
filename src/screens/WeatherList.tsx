@@ -6,6 +6,7 @@ import { Text, View, StyleSheet, Pressable, TextInput } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import BackgroundGradient from "@/components/BackgroundGradient";
+import WeatherWidget from "@/components/WeatherWidget";
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
 
 export default function WeatherList() {
@@ -59,6 +60,9 @@ export default function WeatherList() {
               style={styles.searchInput}
             />
           </View>
+        </View>
+        <View style={{ flex: 1 }}>
+          <WeatherWidget />
         </View>
       </View>
     </>
