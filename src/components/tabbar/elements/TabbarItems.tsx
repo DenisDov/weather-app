@@ -8,6 +8,7 @@ import ListIcon from "../icons/ListIcon";
 import MapIcon from "../icons/MapIcon";
 
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
+import { eventEmitter } from "@/lib/EventEmitter";
 
 export default function TabbarItems() {
   const { width, height } = useApplicationDimensions();
@@ -25,7 +26,10 @@ export default function TabbarItems() {
         justifyContent: "space-between",
         paddingHorizontal: 32,
       }}>
-      <MapIcon />
+      <Pressable onPress={() => eventEmitter.emit("locationEvent")}>
+        <MapIcon />
+      </Pressable>
+
       <TrapezoidBackground width={trapezoidWidth} height={trapezoidHeight} />
       <Pressable
         style={{

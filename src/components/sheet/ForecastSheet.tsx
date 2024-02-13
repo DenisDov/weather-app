@@ -1,6 +1,6 @@
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useEffect, useState } from "react";
-import { Text, View, StyleSheet, Platform } from "react-native";
+import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedReaction,
@@ -24,12 +24,15 @@ import VisibilityWidget from "../forecast/widgets/VisibilityWidget";
 import WindWidget from "../forecast/widgets/WindWidget";
 
 import { useForecastSheetPosition } from "@/context/ForecastSheetContext";
+import { useWeatherData } from "@/context/WeatherDataContext";
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
-import { hourly, weekly } from "@/lib/data/ForecastData";
 import { ForecastType } from "@/models/Weather";
 
 export default function ForecastSheet() {
   const { width, height } = useApplicationDimensions();
+  const {
+    weatherData: { hourlyForecast, weeklyForecast },
+  } = useWeatherData();
   const smalLWidgetSize = width / 2 - 20;
   const snapPoints = ["38.5%", "83%"];
   const firstSnapPoint = height * (parseFloat(snapPoints[0]) / 100);
@@ -113,7 +116,7 @@ export default function ForecastSheet() {
               capsuleWidth={capsuleWidth}
               capsuleHeight={capsuleHeight}
               capsuleRadius={capsuleRadius}
-              forecasts={hourly}
+              forecasts={hourlyForecast}
             />
           </Animated.View>
           <Animated.View style={animatedWeeklyStyles}>
@@ -121,7 +124,7 @@ export default function ForecastSheet() {
               capsuleWidth={capsuleWidth}
               capsuleHeight={capsuleHeight}
               capsuleRadius={capsuleRadius}
-              forecasts={weekly}
+              forecasts={weeklyForecast}
             />
           </Animated.View>
         </View>
@@ -150,5 +153,3 @@ export default function ForecastSheet() {
     </BottomSheet>
   );
 }
-
-const styles = StyleSheet.create({});

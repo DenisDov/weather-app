@@ -8,15 +8,14 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useForecastSheetPosition } from "@/context/ForecastSheetContext";
+import { useWeatherData } from "@/context/WeatherDataContext";
 import { DEGREE_SYMBOL } from "@/lib/Constants";
-import { Weather } from "@/models/Weather";
 
-interface WeatherInfoProps {
-  weather: Weather;
-}
-
-export default function WeatherInfo({ weather }: WeatherInfoProps) {
-  const { city, temperature, condition, high, low } = weather;
+export default function WeatherInfo() {
+  const { weatherData } = useWeatherData();
+  const {
+    currentWeather: { city, temperature, condition, high, low },
+  } = weatherData;
   const { top } = useSafeAreaInsets();
   const topMargin = 51;
   const weatherInfoMargin = top + topMargin;

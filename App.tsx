@@ -6,6 +6,7 @@ import React, { useCallback } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { WeatherDataProvider } from "@/context/WeatherDataContext";
 import RootNavigator from "@/navigators/RootNavigator";
 
 SplashScreen.preventAutoHideAsync();
@@ -26,10 +27,12 @@ export default function App() {
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <NavigationContainer theme={DarkTheme}>
-          <RootNavigator />
-        </NavigationContainer>
-        <StatusBar style="light" />
+        <WeatherDataProvider>
+          <NavigationContainer theme={DarkTheme}>
+            <RootNavigator />
+          </NavigationContainer>
+          <StatusBar style="light" />
+        </WeatherDataProvider>
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );
