@@ -9,11 +9,10 @@ Figma file: [Coffee Shop Mobile App Design](https://www.figma.com/community/file
 - [Video](#video)
 - [Screenshots](#screenshots)
 - [Features](#features)
-- [Installation](#installation)
 
 ## Video
 
-[<video src="https://drive.google.com/file/d/1VJSde9o6hKVjfxQlpeIqW3i8MvOSIDRi/view?usp=sharing" width="200" ></video>](https://drive.google.com/file/d/1VJSde9o6hKVjfxQlpeIqW3i8MvOSIDRi/view?usp=sharing)
+<iframe src="https://drive.google.com/file/d/1VJSde9o6hKVjfxQlpeIqW3i8MvOSIDRi/preview" width="640" height="480" allow="autoplay"></iframe>
 
 ## Screenshots
 
@@ -29,6 +28,8 @@ Figma file: [Coffee Shop Mobile App Design](https://www.figma.com/community/file
 - blur effects
 - react context
 - typescript
+
+---
 
 > [!NOTE]  
 > expo-prebuild
