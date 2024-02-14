@@ -12,7 +12,7 @@ Figma: [Weather App UI Design](https://www.figma.com/community/file/110082629453
 
 ## Video
 
-![](https://www.youtube.com/watch?v=NnTvZWp5Q7o)
+[<img src="https://i.vimeocdn.com/video/1798511076-4c2703133b2201a669d2c91f1fd0748c99d9ead1b6b2626e0674b1e29d7f77c0-d?mw=400&mh=866&q=70" width="320">](https://vimeo.com/912956417?share=copy#t=0)
 
 ## Screenshots
 
