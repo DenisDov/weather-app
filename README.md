@@ -12,7 +12,7 @@ Figma file: [Coffee Shop Mobile App Design](https://www.figma.com/community/file
 
 ## Video
 
-[![preview](https://vumbnail.com/912956417.jpg)](https://vimeo.com/912956417 "Little red riding hood - Click to Watch!")
+[![preview](https://vumbnail.com/912956417.jpg)](https://vimeo.com/912956417 "preview")
 
 ## Screenshots
 
