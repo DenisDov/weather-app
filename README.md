@@ -12,7 +12,7 @@ Figma: [Weather App UI Design](https://www.figma.com/community/file/110082629453
 
 ## Video
 
-[<img src="./readme-assets/fr1.png" width="320">](https://vimeo.com/912956417?share=copy#t=0)
+<iframe src="https://player.vimeo.com/video/912956417?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="222" height="480" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" title="Simulator Screen Recording - iPhone 13 mini - 2024-02-14 at 16.07.46"></iframe>
 
 ## Screenshots
 
