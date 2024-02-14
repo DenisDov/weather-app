@@ -1,6 +1,6 @@
 # React Native Weather App
 
-Figma file: [Coffee Shop Mobile App Design](https://www.figma.com/community/file/1100826294536456295/weather-app-ui-design)
+Figma: [Weather App UI Design](https://www.figma.com/community/file/1100826294536456295/weather-app-ui-design)
 
 ![An old rock in the desert](./readme-assets/preview.png)
 
