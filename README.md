@@ -17,8 +17,8 @@ https://vimeo.com/912956417
 ## Screenshots
 
 <p float="left">
-  <img src="./readme-assets/1.png" width="375" />
-  <img src="./readme-assets/2.png" width="375" />
+  <img src="./readme-assets/fr1.png" width="320" style="margin-right: 16px"/>
+  <img src="./readme-assets/fr2.png" width="320" />
 </p>
 
 ## Features
